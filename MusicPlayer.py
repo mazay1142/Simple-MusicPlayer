@@ -126,7 +126,7 @@ class MusicPlayer:
         volume_float = float(volume_level) / 100
         pygame.mixer.music.set_volume(volume_float)
 
-    #I don`t know how THE FUCK 132-152 works, good luck debugging it
+    #I don`t know how THE FUCK 130-149 works, good luck debugging it
     def next_song(self):
         if self.playback_mode == "sequential":
             self.current_song_index += 1
@@ -163,4 +163,5 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = MusicPlayer(root)
     check_song_end(app)
+
     root.mainloop()
