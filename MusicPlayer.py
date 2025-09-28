@@ -63,7 +63,7 @@ class MusicPlayer:
         self.volume_label.pack(pady=(5, 0))
 
         self.volume_slider = tk.Scale(self.root, from_=0, to=100, orient=tk.HORIZONTAL, command=self.set_volume)
-        self.volume_slider.set(25)  #Default volume level, change if needed
+        self.volume_slider.set(25)#Default volume level, change if needed
         self.volume_slider.pack(pady=5)
 
     def open_folder(self):
@@ -74,13 +74,13 @@ class MusicPlayer:
                 self.load_songs(folder_path)
             except Exception as e:
                 print("Error while: open_folder")
-                messagebox.showerror("Error: Open Folder", str(e))
+                messagebox.showerror("Error: open_folder", str(e))
 
     def load_songs(self, folder_path):
         self.songs_listbox.delete(0, tk.END)
         self.all_songs = []
         for song in os.listdir(folder_path):
-            if song.endswith(('.mp3', '.wav','.ogg')):
+            if song.endswith(('.mp3','.wav','.ogg')):
                 self.all_songs.append(song)
                 self.songs_listbox.insert(tk.END, song)
 
@@ -94,7 +94,7 @@ class MusicPlayer:
             self.is_paused = False
         except Exception as e:
             print("Error while: play_music")
-            messagebox.showerror("Error: Play Music", str(e))
+            messagebox.showerror("Error: play_music", str(e))
 
     def pause_music(self):
         try:
@@ -102,7 +102,7 @@ class MusicPlayer:
             self.is_paused = True
         except Exception as e:
             print("Error while: pause_music")
-            messagebox.showerror("Error: Pause Music", str(e))
+            messagebox.showerror("Error: pause_music", str(e))
 
     def resume_music(self):
         if self.is_paused:
@@ -111,7 +111,7 @@ class MusicPlayer:
                 self.is_paused = False
             except Exception as e:
                 print("Error while: resume_music")
-                messagebox.showerror("Error: Resume Music", str(e))
+                messagebox.showerror("Error: resume_music", str(e))
 
     def stop_music(self):
         try:
@@ -119,14 +119,14 @@ class MusicPlayer:
             self.is_paused = True
         except Exception as e:
             print("Error while: stop_music")
-            messagebox.showerror("Error: Stop Music", str(e))
+            messagebox.showerror("Error: stop_music", str(e))
 
     #Convert the volume level from 0-100 to a float between 0.0 and 1.0
     def set_volume(self, volume_level):
         volume_float = float(volume_level) / 100
         pygame.mixer.music.set_volume(volume_float)
 
-    #I don`t know how THE FUCK 130-149 works, good luck debugging it
+    #I don`t know how THE FUCK 132-152 works, good luck debugging it
     def next_song(self):
         if self.playback_mode == "sequential":
             self.current_song_index += 1
@@ -152,18 +152,15 @@ class MusicPlayer:
         self.playback_mode = self.mode_var.get()
         print(f"Playback mode changed to {self.mode_var.get()}")
 
-def handle_song_end(self):
-    if not self.is_paused:
-        self.next_song()
-
-def check_song_end(app):
+def check_song_end(self):
     for event in pygame.event.get():
-        if event == pygame.USEREVENT:
-            app.handle_song_end()
-    root.after(25, check_song_end, app)
+        if event.type == pygame.USEREVENT:
+            if not self.is_paused:
+               self.next_song()
+    root.after(25, check_song_end, self)
 
 if __name__ == "__main__":
     root = tk.Tk()
     app = MusicPlayer(root)
-    root.mainloop()
     check_song_end(app)
+    root.mainloop()
